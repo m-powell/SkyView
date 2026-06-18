@@ -1,0 +1,6 @@
+data/snapshots.csv
+data/*.csv
+logs/
+.Rproj.user
+.Rhistory
+*.Rproj
