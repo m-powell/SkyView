@@ -65,6 +65,8 @@ append_snapshot <- function() {
   df <- fetch_aircraft()
   if (is.null(df)) return(invisible(NULL))
 
+  dir.create(dirname(SNAPSHOT_FILE), showWarnings = FALSE, recursive = TRUE)
+
   if (!file.exists(SNAPSHOT_FILE)) {
     write_csv(df, SNAPSHOT_FILE)
   } else {
@@ -74,4 +76,6 @@ append_snapshot <- function() {
   invisible(df)
 }
 
+# Always run when called as a script; when sourced interactively, call
+# append_snapshot() manually or use the Shiny refresh button.
 if (!interactive()) append_snapshot()
