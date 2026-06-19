@@ -7,10 +7,18 @@ SNAPSHOT_FILE <- here::here("data", "snapshots.csv")
 # Known military ICAO prefixes (hex ranges) and callsign patterns
 MILITARY_CALLSIGN_RE <- "^(RCH|REACH|PAT|VENUS|CONDA|SPAR|IRON|BLADE|FURY|GHOST|HAWK|EAGLE|VIPER|HALO|REAPER|BISON|TUSK|JAKE|WOLF|OTTER|CYLON|BRRT)"
 
+EMPTY_SNAPSHOT <- tibble(
+  icao24 = character(), callsign = character(), origin_country = character(),
+  longitude = double(), latitude = double(), baro_altitude = double(),
+  on_ground = logical(), velocity = double(), true_track = double(),
+  squawk = character(), fetched_at = as.POSIXct(character())
+)
+
 load_snapshots <- function(hours_back = 24) {
-  if (!file.exists(SNAPSHOT_FILE)) return(tibble())
+  if (!file.exists(SNAPSHOT_FILE)) return(EMPTY_SNAPSHOT)
   df <- read_csv(SNAPSHOT_FILE, show_col_types = FALSE,
                  col_types = cols(fetched_at = col_character()))
+  if (nrow(df) == 0) return(EMPTY_SNAPSHOT)
   df |>
     mutate(fetched_at = ymd_hms(fetched_at)) |>
     filter(fetched_at >= Sys.time() - hours(hours_back))
