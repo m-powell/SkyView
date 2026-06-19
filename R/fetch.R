@@ -3,9 +3,8 @@
 library(httr2)
 library(dplyr)
 library(readr)
-library(lubridate)
 
-SNAPSHOT_FILE <- here::here("data", "snapshots.csv")
+SNAPSHOT_FILE <- file.path("data", "snapshots.csv")
 
 # West Point area bounding box (roughly 50-mile radius)
 # lamin, lomin, lamax, lomax
@@ -51,7 +50,7 @@ fetch_aircraft <- function(bbox = BBOX) {
     select(icao24, callsign, origin_country, longitude, latitude,
            baro_altitude, on_ground, velocity, true_track, squawk) |>
     mutate(
-      callsign    = trimws(callsign),
+      callsign    = trimws(iconv(callsign, to = "UTF-8", sub = "")),
       fetched_at  = format(Sys.time(), "%Y-%m-%d %H:%M:%S"),
       baro_altitude = as.numeric(baro_altitude),
       longitude   = as.numeric(longitude),

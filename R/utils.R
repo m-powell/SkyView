@@ -2,7 +2,7 @@ library(dplyr)
 library(readr)
 library(lubridate)
 
-SNAPSHOT_FILE <- here::here("data", "snapshots.csv")
+SNAPSHOT_FILE <- file.path("data", "snapshots.csv")
 
 # Known military ICAO prefixes (hex ranges) and callsign patterns
 MILITARY_CALLSIGN_RE <- "^(RCH|REACH|PAT|VENUS|CONDA|SPAR|IRON|BLADE|FURY|GHOST|HAWK|EAGLE|VIPER|HALO|REAPER|BISON|TUSK|JAKE|WOLF|OTTER|CYLON|BRRT)"

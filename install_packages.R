@@ -3,7 +3,7 @@ pkgs <- c(
   "leaflet", "leaflet.extras",
   "dplyr", "readr", "lubridate",
   "ggplot2", "DT",
-  "httr2", "here"
+  "httr2"
 )
 
 install.packages(pkgs[!pkgs %in% installed.packages()[, "Package"]],
