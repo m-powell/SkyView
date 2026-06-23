@@ -1,6 +1,10 @@
 # Run this script on a cron schedule to collect snapshots.
-# On the Pi, add to crontab:
-#   */5 * * * * Rscript /home/pi/SkyView/fetch_cron.R >> /home/pi/SkyView/logs/fetch.log 2>&1
+# Installed cron entry (every 3 hours):
+#   0 */3 * * * /usr/bin/Rscript /home/math-pi-2/SkyView/fetch_cron.R >> /home/math-pi-2/SkyView/logs/fetch.log 2>&1
 
-setwd(dirname(sys.frame(1)$ofile))  # set wd to script location
+args     <- commandArgs(trailingOnly = FALSE)
+file_arg <- grep("--file=", args, value = TRUE)
+if (length(file_arg) > 0)
+  setwd(dirname(normalizePath(sub("--file=", "", file_arg))))
+
 source("R/fetch.R")

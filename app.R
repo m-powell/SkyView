@@ -8,6 +8,7 @@ library(DT)
 library(lubridate)
 
 source("R/utils.R")
+source("R/fetch.R")
 
 # ---------------------------------------------------------------------------
 # UI
@@ -92,7 +93,10 @@ server <- function(input, output, session) {
   }
 
   observe({ load_data() })
-  observeEvent(input$refresh, { load_data() })
+  observeEvent(input$refresh, {
+    append_snapshot()
+    load_data()
+  })
   observeEvent(input$hours_back, { load_data() })
 
   # Auto-refresh every 5 minutes
