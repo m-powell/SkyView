@@ -123,7 +123,12 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     leaflet() |>
       addProviderTiles(providers$CartoDB.DarkMatter) |>
-      setView(lng = -74.0, lat = 41.0, zoom = 9)
+      setView(lng = -74.0, lat = 41.0, zoom = 9) |>
+      addLegend("bottomright",
+        colors = c("cyan", "orange"),
+        labels = c("Civilian", "Military"),
+        opacity = 0.8
+      )
   })
 
   observe({
@@ -150,11 +155,6 @@ server <- function(input, output, session) {
           "Squawk: ", squawk,
           if_else(is_military, "<br><b style='color:orange'>⚠ Military</b>", "")
         )
-      ) |>
-      addLegend("bottomright",
-        colors = c("cyan", "orange"),
-        labels = c("Civilian", "Military"),
-        opacity = 0.8
       )
   })
 
